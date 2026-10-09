@@ -147,7 +147,7 @@ const MN=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez
 const ml=m=>MN[+m.slice(5)-1]+'/'+m.slice(2,4);
 const PRACAS=[...new Set(S.map(s=>s.praca))].sort();
 const st={meses:new Set(M.map((_,i)=>i)),canal:'lcr',praca:'',gvo:'',loja:-1,cons:-1,tab:'resumo',
-  sort:{},q:'',onlyN:true,cmType:'all',cmTheme:-1,cmShow:40};
+  sort:{},q:'',onlyN:false,cmType:'all',cmTheme:-1,cmShow:40};
 const TABS=[['resumo','Resumo'],['pracas','Praças'],['gestores','Gestores'],['lojas','Lojas'],['consultores','Consultores'],['comentarios','Comentários e insights']];
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -431,7 +431,7 @@ function viewConsultores(){
   const cols=[{k:'name',h:'Consultor',l:1},{k:'loja',h:'Loja principal',l:1},...baseCols(minN).slice(0,7),
     {k:'lgap',h:'Gap da loja',f:r=>`<span class="${r.lgap<0?'neg':'pos'}">${sg(r.lgap)}</span>`,tip:'Gap de NPS da loja principal do consultor, no mesmo recorte'},
     baseCols(minN)[8]];
-  const ex=`<label class="note"><input type="checkbox" id="onlyN" ${st.onlyN?'checked':''}> Só consultores com ${minN}+ respostas (${rows.length} de ${tot})</label>`;
+  const ex=`<label class="note"><input type="checkbox" id="onlyN" ${st.onlyN?'checked':''}> Ocultar consultores com menos de ${minN} respostas (${rows.length} de ${tot} aparecem)</label>`;
   return `<div class="card"><h2>Consultores</h2><p class="sub">Pesquisas de Loja com consultor identificado, que existem só no canal Loja${semC?` (${fi(semC)} respostas de Loja sem consultor na base ficam fora desta aba)`:''}. Quem atende em mais de uma loja aparece uma vez, somando as respostas, com “+N” na loja principal. Clique na linha para ler os comentários.</p>
    ${tools('consultores',ex)}${tableHTML('consultores',cols,rows,true)}</div>`;
 }
